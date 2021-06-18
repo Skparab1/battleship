@@ -1,5 +1,8 @@
 # Battleship
 
+import random, time
+from random import randint,randrange
+
 # print all the lines
 def printarena():
     global c1,c2,c3,c4,c5,c6,c7,c8,c9,c10, l1,l2,l3,l4,l5,l6,l7,l8,l9,l10
@@ -62,12 +65,12 @@ choice = 'start'
 ship1pos = 5
 height = 3
 
-while choice != 'done':
+while choice != '':
     printarena()
     print('position your first ship')
     print('press WASD keys followed by enter to move your ship')
     #print('press t to turn your ship') Sorry, turning does not work yet
-    print('type done and enter when you are done')
+    print('press enter when you are done')
     print(height)
     choice = input('')
     choice = choice.lower()
@@ -117,14 +120,14 @@ ship2pos = (5 if ship1pos != 5 else 3)
 height2 = 3
 choice = 'reset'
 
-while choice != 'done':
+while choice != '':
     ln = height2
     l1,l2,l3,l4,l5,l6,l7,l8 = (adds2(l1) if ln == 0 else l1), (adds2(l2) if (ln == 1 or ln == 0) else l2), (adds2(l3) if (ln == 2 or ln == 1 or ln == 0) else l3), (adds2(l4) if (ln == 3 or ln == 2 or ln == 1) else l4), (adds2(l5) if (ln == 4 or ln == 3 or ln == 2) else l5), (adds2(l6) if (ln == 5 or ln == 4 or ln == 3) else l6), (adds2(l7) if (ln == 6 or ln == 5 or ln == 4) else l7), (adds2(l8) if (ln == 7 or ln == 6 or ln == 5) else l8)
     printarena()
     print('position your second ship')
     print('press WASD keys followed by enter to move your ship')
     #print('press t to turn your ship') Sorry, turning does not work yet
-    print('type done and enter when you are done')
+    print('press enter when you are done')
     print(height2)
     choice = input('')
     choice = choice.lower()
@@ -173,14 +176,14 @@ ship3pos = 5 if (ship1pos != 5 and ship2pos != 5) else (3 if (ship1pos != 3 and 
 height3 = 3
 choice = 'reset'
 
-while choice != 'done':
+while choice != '':
     ln = height3
     l1,l2,l3,l4,l5,l6,l7,l8 = (adds3(l1) if ln == 0 else l1), (adds3(l2) if (ln == 1 or ln == 0) else l2), (adds3(l3) if (ln == 2 or ln == 1 or ln == 0) else l3), (adds3(l4) if (ln == 3 or ln == 2 or ln == 1) else l4), (adds3(l5) if (ln == 4 or ln == 3 or ln == 2) else l5), (adds3(l6) if (ln == 5 or ln == 4 or ln == 3) else l6), (adds3(l7) if (ln == 6 or ln == 5 or ln == 4) else l7), (adds3(l8) if (ln == 7 or ln == 6 or ln == 5) else l8)
     printarena()
-    print('position your second ship')
+    print('position your third ship')
     print('press WASD keys followed by enter to move your ship')
     #print('press t to turn your ship') Sorry, turning does not work yet
-    print('type done and enter when you are done')
+    print('press enter when you are done')
     print(height2)
     choice = input('')
     choice = choice.lower()
@@ -224,4 +227,53 @@ while choice != 'done':
             l9 = adds3(l9)
         if ln == 9 or ln == 8 or ln == 7:
             l10 = adds3(l10)
-    
+
+printarena()
+
+print('\n\nBattleship')
+input('press enter to begin')
+
+# computer picking random coordinates for ships
+coordinates = ''
+letterstr = 'abcdefghij'
+letter = letterstr[randint(0,9)]
+num = (randint(3,9))
+num2 = str(num-1)
+num3 = str(num-2)
+coords = '        ' + letter+str(num)+' '+letter+num2+' '+letter+num3
+coordinates = coordinates + coords
+
+letterstr = letterstr.replace(letter,'')
+letter = letterstr[randint(0,9)]
+num = (randint(3,9))
+num2 = str(num-1)
+num3 = str(num-2)
+coords = '        ' + letter+str(num)+' '+letter+num2+' '+letter+num3
+coordinates = coordinates + coords
+
+letterstr = letterstr.replace(letter,'')
+letter = letterstr[randint(0,9)]
+num = (randint(3,9))
+num2 = str(num-1)
+num3 = str(num-2)
+coords = '        ' + letter+str(num)+' '+letter+num2+' '+letter+num3
+coordinates = coordinates + coords
+
+print(coordinates)
+
+won = False
+
+while won != True:
+    printarena()
+    coordinate = input('type the coordinate of the point you want to fire. for example, a1 or b7. \n> ')
+    coordinate = coordinate.replace(' ','')
+    if coordinate in coordinates:
+        print('You hit a ship')
+        input()
+        
+    else:
+        print('You missed')
+        input()
+
+
+

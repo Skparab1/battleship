@@ -31,22 +31,37 @@ def adds1(line):
     line = linepart1 + '^' + linepart2
     return line
 
+def removeship2():
+    global l1,l2,l3,l4,l5,l6,l7,l8,l9,l10
+    l1,l2,l3,l4,l5,l6,l7,l8,l9,l10 = l1.replace('O',' '),l2.replace('O',' '),l3.replace('O',' '),l4.replace('O',' '),l5.replace('O',' '),l6.replace('O',' '),l7.replace('O',' '),l8.replace('O',' '),l9.replace('O',' '),l10.replace('O',' ')
+
+def adds2(line):
+    global ship2pos
+    pos = ship2pos*2
+    linepart1 = line[:pos]
+    linepart2 = line[pos+1:]
+    line = linepart1 + 'O' + linepart2
+    return line
+
 # initialise line variables
 l1,l2,l3,l4,l5,l6,l7,l8,l9,l10 = ' '*20,' '*20,' '*20,' '*10 + '^' + ' '*9,' '*10 + '^' + ' '*9,' '*10 + '^' + ' '*9,' '*20,' '*20,' '*20,' '*20
 c1,c2,c3,c4,c5,c6,c7,c8,c9,c10 = ' '*20,' '*20,' '*20,' '*20,' '*20,' '*20,' '*20,' '*20,' '*20,' '*20
 choice = 'start'
 ship1pos = 5
 height = 3
+ship2pos = 5
+height2 = 3
 
 while choice != 'done':
     printarena()
-    print('position your ship')
+    print('position your first ship')
     print('press WASD keys followed by enter to move your ship')
     #print('press t to turn your ship') Sorry, turning does not work yet
     print('type done and enter when you are done')
-    print(height)
+    print(height2)
     choice = input('')
     choice = choice.lower()
+
     if choice == 'w':
         height = (height - 1 if height > 0 else height)
         ln = height
@@ -57,6 +72,7 @@ while choice != 'done':
         if ln == 9 or ln == 8 or ln == 7:
             l10 = adds1(l10)
         #l9,l10 = (adds1(l9) if (ln == 8 if ln == 7 if ln == 6) else l9), (adds1(l10) if (ln == 9 or ln == 8 or ln == 7) else l10) 
+   
     if choice == 's':
         height = (height + 1 if height < 10 else height)
         ln = height
@@ -66,6 +82,7 @@ while choice != 'done':
             l9 = adds1(l9)
         if ln == 9 or ln == 8 or ln == 7:
             l10 = adds1(l10)
+
     if choice == 'a':
         ship1pos = (ship1pos - 1 if ship1pos > 0 else ship1pos)
         ln = height
@@ -75,8 +92,9 @@ while choice != 'done':
             l9 = adds1(l9)
         if ln == 9 or ln == 8 or ln == 7:
             l10 = adds1(l10)
+
     if choice == 'd':
-        ship1pos = (ship1pos + 1 if ship1pos < 10 else ship1pos)
+        ship1pos = (ship1pos + 1 if ship1pos < 9 else ship1pos)
         ln = height
         removeship1()
         l1,l2,l3,l4,l5,l6,l7,l8 = (adds1(l1) if ln == 0 else l1), (adds1(l2) if (ln == 1 or ln == 0) else l2), (adds1(l3) if (ln == 2 or ln == 1 or ln == 0) else l3), (adds1(l4) if (ln == 3 or ln == 2 or ln == 1) else l4), (adds1(l5) if (ln == 4 or ln == 3 or ln == 2) else l5), (adds1(l6) if (ln == 5 or ln == 4 or ln == 3) else l6), (adds1(l7) if (ln == 6 or ln == 5 or ln == 4) else l7), (adds1(l8) if (ln == 7 or ln == 6 or ln == 5) else l8)
@@ -84,3 +102,57 @@ while choice != 'done':
             l9 = adds1(l9)
         if ln == 9 or ln == 8 or ln == 7:
             l10 = adds1(l10)
+
+choice = 'reset'
+while choice != 'done':
+    ln = height2
+    l1,l2,l3,l4,l5,l6,l7,l8 = (adds2(l1) if ln == 0 else l1), (adds2(l2) if (ln == 1 or ln == 0) else l2), (adds2(l3) if (ln == 2 or ln == 1 or ln == 0) else l3), (adds2(l4) if (ln == 3 or ln == 2 or ln == 1) else l4), (adds2(l5) if (ln == 4 or ln == 3 or ln == 2) else l5), (adds2(l6) if (ln == 5 or ln == 4 or ln == 3) else l6), (adds2(l7) if (ln == 6 or ln == 5 or ln == 4) else l7), (adds2(l8) if (ln == 7 or ln == 6 or ln == 5) else l8)
+    printarena()
+    print('position your second ship')
+    print('press WASD keys followed by enter to move your ship')
+    #print('press t to turn your ship') Sorry, turning does not work yet
+    print('type done and enter when you are done')
+    print(height2)
+    choice = input('')
+    choice = choice.lower()
+
+    if choice == 'w':
+        height2 = (height2 - 1 if height2 > 0 else height2)
+        ln = height2
+        removeship2()
+        l1,l2,l3,l4,l5,l6,l7,l8 = (adds2(l1) if ln == 0 else l1), (adds2(l2) if (ln == 1 or ln == 0) else l2), (adds2(l3) if (ln == 2 or ln == 1 or ln == 0) else l3), (adds2(l4) if (ln == 3 or ln == 2 or ln == 1) else l4), (adds2(l5) if (ln == 4 or ln == 3 or ln == 2) else l5), (adds2(l6) if (ln == 5 or ln == 4 or ln == 3) else l6), (adds2(l7) if (ln == 6 or ln == 5 or ln == 4) else l7), (adds2(l8) if (ln == 7 or ln == 6 or ln == 5) else l8)
+        if ln == 8 or ln == 7 or ln == 6:
+            l9 = adds1(l9)
+        if ln == 9 or ln == 8 or ln == 7:
+            l10 = adds1(l10)
+
+    if choice == 's':
+        height2 = (height2 + 1 if height2 < 10 else height2)
+        ln = height2
+        removeship2()
+        l1,l2,l3,l4,l5,l6,l7,l8 = (adds2(l1) if ln == 0 else l1), (adds2(l2) if (ln == 1 or ln == 0) else l2), (adds2(l3) if (ln == 2 or ln == 1 or ln == 0) else l3), (adds2(l4) if (ln == 3 or ln == 2 or ln == 1) else l4), (adds2(l5) if (ln == 4 or ln == 3 or ln == 2) else l5), (adds2(l6) if (ln == 5 or ln == 4 or ln == 3) else l6), (adds2(l7) if (ln == 6 or ln == 5 or ln == 4) else l7), (adds2(l8) if (ln == 7 or ln == 6 or ln == 5) else l8)
+        if ln == 8 or ln == 7 or ln == 6:
+            l9 = adds1(l9)
+        if ln == 9 or ln == 8 or ln == 7:
+            l10 = adds1(l10)
+
+    if choice == 'a':
+        ship2pos = (ship2pos - 1 if ship2pos > 0 else ship2pos)
+        ln = height2
+        removeship2()
+        l1,l2,l3,l4,l5,l6,l7,l8 = (adds2(l1) if ln == 0 else l1), (adds2(l2) if (ln == 1 or ln == 0) else l2), (adds2(l3) if (ln == 2 or ln == 1 or ln == 0) else l3), (adds2(l4) if (ln == 3 or ln == 2 or ln == 1) else l4), (adds2(l5) if (ln == 4 or ln == 3 or ln == 2) else l5), (adds2(l6) if (ln == 5 or ln == 4 or ln == 3) else l6), (adds2(l7) if (ln == 6 or ln == 5 or ln == 4) else l7), (adds2(l8) if (ln == 7 or ln == 6 or ln == 5) else l8)
+        if ln == 8 or ln == 7 or ln == 6:
+            l9 = adds1(l9)
+        if ln == 9 or ln == 8 or ln == 7:
+            l10 = adds1(l10)
+
+    if choice == 'd':
+        ship2pos = (ship2pos + 1 if ship2pos < 9 else ship2pos)
+        ln = height2
+        removeship2()
+        l1,l2,l3,l4,l5,l6,l7,l8 = (adds2(l1) if ln == 0 else l1), (adds2(l2) if (ln == 1 or ln == 0) else l2), (adds2(l3) if (ln == 2 or ln == 1 or ln == 0) else l3), (adds2(l4) if (ln == 3 or ln == 2 or ln == 1) else l4), (adds2(l5) if (ln == 4 or ln == 3 or ln == 2) else l5), (adds2(l6) if (ln == 5 or ln == 4 or ln == 3) else l6), (adds2(l7) if (ln == 6 or ln == 5 or ln == 4) else l7), (adds2(l8) if (ln == 7 or ln == 6 or ln == 5) else l8)
+        if ln == 8 or ln == 7 or ln == 6:
+            l9 = adds1(l9)
+        if ln == 9 or ln == 8 or ln == 7:
+            l10 = adds1(l10)
+    

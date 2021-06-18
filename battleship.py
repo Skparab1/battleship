@@ -58,6 +58,20 @@ def adds3(line):
     line = linepart1 + '+' + linepart2
     return line
 
+def addhit(line,pos):
+    pos = pos*2
+    linepart1 = line[:pos]
+    linepart2 = line[pos+1:]
+    line = linepart1 + 'H' + linepart2
+    return line
+
+def addmiss(line,pos):
+    pos = pos*2
+    linepart1 = line[:pos]
+    linepart2 = line[pos+1:]
+    line = linepart1 + 'M' + linepart2
+    return line
+
 # initialise line variables
 l1,l2,l3,l4,l5,l6,l7,l8,l9,l10 = ' '*20,' '*20,' '*20,' '*10 + '^' + ' '*9,' '*10 + '^' + ' '*9,' '*10 + '^' + ' '*9,' '*20,' '*20,' '*20,' '*20
 c1,c2,c3,c4,c5,c6,c7,c8,c9,c10 = ' '*20,' '*20,' '*20,' '*20,' '*20,' '*20,' '*20,' '*20,' '*20,' '*20
@@ -244,7 +258,7 @@ coords = '        ' + letter+str(num)+' '+letter+num2+' '+letter+num3
 coordinates = coordinates + coords
 
 letterstr = letterstr.replace(letter,'')
-letter = letterstr[randint(0,9)]
+letter = letterstr[randint(0,8)]
 num = (randint(3,9))
 num2 = str(num-1)
 num3 = str(num-2)
@@ -252,7 +266,7 @@ coords = '        ' + letter+str(num)+' '+letter+num2+' '+letter+num3
 coordinates = coordinates + coords
 
 letterstr = letterstr.replace(letter,'')
-letter = letterstr[randint(0,9)]
+letter = letterstr[randint(0,7)]
 num = (randint(3,9))
 num2 = str(num-1)
 num3 = str(num-2)
@@ -268,11 +282,23 @@ while won != True:
     coordinate = input('type the coordinate of the point you want to fire. for example, a1 or b7. \n> ')
     coordinate = coordinate.replace(' ','')
     if coordinate in coordinates:
+        coordinate = str(coordinate)
         print('You hit a ship')
+        l = int(coordinate[-1])
+        h = coordinate[0]
+        hh = 1 if h == 'a' else (2 if h == 'b' else (3 if h == 'c' else (4 if h == 'd' else (5 if h == 'e' else (6 if h == 'f' else (7 if h == 'g' else (8 if h == 'h' else (9 if h == 'i' else (10)))))))))
+        linein = c1 if l == 1 else (c2 if l == 2 else (c3 if l == 3 else (c4 if l == 4 else (c5 if l == 5 else (c6 if l == 6 else (c7 if l == 7 else (c8 if l == 8 else (c9 if l == 9 else l10 ))))))))
+        addhit(linein,hh)
+        
         input()
         
     else:
         print('You missed')
+        l = int(coordinate[-1])
+        h = coordinate[0]
+        hh = 1 if h == 'a' else (2 if h == 'b' else (3 if h == 'c' else (4 if h == 'd' else (5 if h == 'e' else (6 if h == 'f' else (7 if h == 'g' else (8 if h == 'h' else (9 if h == 'i' else (10)))))))))
+        linein = c1 if l == 1 else (c2 if l == 2 else (c3 if l == 3 else (c4 if l == 4 else (c5 if l == 5 else (c6 if l == 6 else (c7 if l == 7 else (c8 if l == 8 else (c9 if l == 9 else l10 ))))))))
+        addmiss(linein,hh)
         input()
 
 

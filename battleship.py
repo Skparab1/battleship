@@ -299,18 +299,18 @@ stringofcoords = 'a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 b1 b2 b3 b4 b5 b6 b7 b8 b9 b10 
 hits, misses, sinks = 0,0,0
 grato = False
 chs, lasthit, lastcoord = 0, False, ''
-compplayed = ''
+compplayed, chits = '', 0
 
 while won != True:
-    try:
+    if True: #try:
 
         if grato == True:
             # computer play
 
-            print(' The computer is playing'), time.sleep(2)
+            print(' The computer is playing'), time.sleep(1.5)
 
             # picking random coordinate 
-            if lasthit == False: # some problem here
+            if lasthit == False: 
                 letterstr = 'abcdefghij'
                 letter = letterstr[randint(0,9)]
                 num = (randint(3,9))
@@ -321,16 +321,15 @@ while won != True:
                     randcoord = letter+str(num)
             
             else:
-                l = str(lastcoord[-1])
+                l = lastcoord[-1]
                 h = lastcoord[0]
+                l = int(l)
                 l += 1
+                l = str(l)
                 randcoord = h+l
                 while randcoord in compplayed:
-                    l = l + randint(-1,1)
-                    randcoord = h+l
-            
-            randcoord = randcoord.replace(' ','')
-            compplayed = randcoord + ' ' + compplayed
+                    l = int(l) + randint(-1,1)
+                    randcoord = h+str(l)
 
             if randcoord in yourcoords:
                 lasthit = True
@@ -338,6 +337,7 @@ while won != True:
                 toprint = 'computer has hit one of your ships'
                 coordinate = str(randcoord)
                 chs += 1
+                chits += 1
 
                 l = int(coordinate[-1])
                 h = coordinate[0]
@@ -349,7 +349,6 @@ while won != True:
                 l1,l2,l3,l4,l5,l6,l7,l8,l9,l10 = (addhit(l1,hh) if ln == 1 else l1), (addhit(l2,hh) if ln == 2 else l2), (addhit(l3,hh) if ln == 3 else l3), (addhit(l4,hh) if ln == 4 else l4), (addhit(l5,hh) if ln == 5 else l5), (addhit(l6,hh) if ln == 6 else l6), (addhit(l7,hh) if ln == 7 else l7), (addhit(l8,hh) if ln == 8 else l8), (addhit(l9,hh) if ln == 9 else l9), (addhit(l10,hh) if ln == 0 else l10)
 
             else:
-                lasthit = False
                 toprint = 'computer has missed'
                 coordinate = str(randcoord)
 
@@ -367,6 +366,9 @@ while won != True:
                 toprint = 'The computer has hit and sank a ship'
                 lasthit = False
 
+            randcoord = randcoord.replace(' ','')
+            compplayed = randcoord + ' ' + compplayed
+
         grato = True
 
         printarena()
@@ -380,7 +382,11 @@ while won != True:
 
         if hits >= 9:
             won = True
-            print('You have won the game.')
+            print('You have hit all the computer\'s ships and won the game.')
+
+        if chits >= 9:
+            won = True
+            print('The computer has hit all of your ships. you have lost')
 
         if (coordinate in coordinates) and (coordinate != '') and (coordinate != ' '):
             coordinate = str(coordinate)
@@ -388,6 +394,7 @@ while won != True:
             hitships += 1
             hits += 1
 
+            guessedcoords = guessedcoords + ' ' + coordinate
             l = int(coordinate[-1])
             h = coordinate[0]
 
@@ -430,8 +437,5 @@ while won != True:
         printarena()
         print('\nHits: ',hits,'   misses: ', misses,'   sinks: ', sinks,'\n')
         print(toprint)
-    except:
-        pass
-
-
-
+    #except:
+        #pass

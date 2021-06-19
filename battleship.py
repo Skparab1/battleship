@@ -1,5 +1,6 @@
 # Battleship
 
+from math import trunc
 import random, time
 from random import randint,randrange
 
@@ -297,26 +298,46 @@ hitships = 0
 stringofcoords = 'a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 b1 b2 b3 b4 b5 b6 b7 b8 b9 b10 c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 e1 e2 e3 e4 e5 e6 e7 e8 e9 e10 f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 g1 g2 g3 g4 g5 g6 g7 g8 g9 g10 h1 h2 h3 h4 h5 h6 h7 h8 h9 h10 i1 i2 i3 i4 i5 i6 i7 i8 i9 i10 j1 j2 j3 j4 j5 j6 j7 j8 j9 j10'
 hits, misses, sinks = 0,0,0
 grato = False
+chs, lasthit, lastcoord = 0, False, ''
+compplayed = ''
 
 while won != True:
-    if True: #try:
-        printarena()
-        print('\nHits: ',hits,'   misses: ', misses,'   sinks: ', sinks,'\n')
-        print(toprint)
-        toprint = ''
+    try:
 
         if grato == True:
             # computer play
 
-            # picking random coordinate
-            letterstr = 'abcdefghij'
-            letter = letterstr[randint(0,9)]
-            num = (randint(3,9))
-            randcoord = letter+str(num)
+            print(' The computer is playing'), time.sleep(2)
+
+            # picking random coordinate 
+            if lasthit == False: # some problem here
+                letterstr = 'abcdefghij'
+                letter = letterstr[randint(0,9)]
+                num = (randint(3,9))
+                randcoord = letter+str(num)
+                while randcoord in compplayed:
+                    letter = letterstr[randint(0,9)]
+                    num = (randint(3,9))
+                    randcoord = letter+str(num)
             
+            else:
+                l = str(lastcoord[-1])
+                h = lastcoord[0]
+                l += 1
+                randcoord = h+l
+                while randcoord in compplayed:
+                    l = l + randint(-1,1)
+                    randcoord = h+l
+            
+            randcoord = randcoord.replace(' ','')
+            compplayed = randcoord + ' ' + compplayed
+
             if randcoord in yourcoords:
-                print('computer has hit')
-                coordinate = str(coordinate)
+                lasthit = True
+                lastcoord = randcoord
+                toprint = 'computer has hit one of your ships'
+                coordinate = str(randcoord)
+                chs += 1
 
                 l = int(coordinate[-1])
                 h = coordinate[0]
@@ -327,16 +348,32 @@ while won != True:
             
                 l1,l2,l3,l4,l5,l6,l7,l8,l9,l10 = (addhit(l1,hh) if ln == 1 else l1), (addhit(l2,hh) if ln == 2 else l2), (addhit(l3,hh) if ln == 3 else l3), (addhit(l4,hh) if ln == 4 else l4), (addhit(l5,hh) if ln == 5 else l5), (addhit(l6,hh) if ln == 6 else l6), (addhit(l7,hh) if ln == 7 else l7), (addhit(l8,hh) if ln == 8 else l8), (addhit(l9,hh) if ln == 9 else l9), (addhit(l10,hh) if ln == 0 else l10)
 
-            #if hitships == 3:
-                #sinks += 1
-                #hitships = 0
-                #toprint = 'You have hit and sank a ship'
-    
-            
             else:
-                print('computer has missed')
+                lasthit = False
+                toprint = 'computer has missed'
+                coordinate = str(randcoord)
+
+                l = int(coordinate[-1])
+                h = coordinate[0]
+
+                hh = 1 if h == 'a' else (2 if h == 'b' else (3 if h == 'c' else (4 if h == 'd' else (5 if h == 'e' else (6 if h == 'f' else (7 if h == 'g' else (8 if h == 'h' else (9 if h == 'i' else (0)))))))))
+            
+                ln = l
+            
+                l1,l2,l3,l4,l5,l6,l7,l8,l9,l10 = (addmiss(l1,hh) if ln == 1 else l1), (addmiss(l2,hh) if ln == 2 else l2), (addmiss(l3,hh) if ln == 3 else l3), (addmiss(l4,hh) if ln == 4 else l4), (addmiss(l5,hh) if ln == 5 else l5), (addmiss(l6,hh) if ln == 6 else l6), (addmiss(l7,hh) if ln == 7 else l7), (addmiss(l8,hh) if ln == 8 else l8), (addmiss(l9,hh) if ln == 9 else l9), (addmiss(l10,hh) if ln == 0 else l10)
+
+            if chs == 3:
+                chs = 0
+                toprint = 'The computer has hit and sank a ship'
+                lasthit = False
 
         grato = True
+
+        printarena()
+        print('- = miss     X = hit')
+        print('\nHits: ',hits,'   misses: ', misses,'   sinks: ', sinks,'')
+        print(toprint)
+        toprint = ''
 
         coordinate = input('\ntype the coordinate of the point you want to fire. for example, a1 or b7. \n> ')
         coordinate = coordinate.replace(' ','')
@@ -380,15 +417,21 @@ while won != True:
             
             c1,c2,c3,c4,c5,c6,c7,c8,c9,c10 = (addmiss(c1,hh) if ln == 1 else c1), (addmiss(c2,hh) if ln == 2 else c2), (addmiss(c3,hh) if ln == 3 else c3), (addmiss(c4,hh) if ln == 4 else c4), (addmiss(c5,hh) if ln == 5 else c5), (addmiss(c6,hh) if ln == 6 else c6), (addmiss(c7,hh) if ln == 7 else c7), (addmiss(c8,hh) if ln == 8 else c8), (addmiss(c9,hh) if ln == 9 else c9), (addmiss(c10,hh) if ln == 0 else c10)
 
-        #print('The computer is playing', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(0.1),print('.', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(0.1), print('.', end = ''),time.sleep(0.1), print('.', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(0.5)
+            #print('The computer is playing', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(0.1),print('.', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(0.1), print('.', end = ''),time.sleep(0.1), print('.', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(0.5)
 
         elif coordinate in guessedcoords and (coordinate != '') and (coordinate != ' '):
             toprint = 'You have already guessed that coordinate. try again'
+            grato = False
 
         else:
             toprint = 'Invalid coordinate. try again'
-    #except:
-        #pass
+            grato = False
+
+        printarena()
+        print('\nHits: ',hits,'   misses: ', misses,'   sinks: ', sinks,'\n')
+        print(toprint)
+    except:
+        pass
 
 
 

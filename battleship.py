@@ -254,7 +254,7 @@ letter = letterstr[randint(0,9)]
 num = (randint(3,9))
 num2 = str(num-1)
 num3 = str(num-2)
-coords = '        ' + letter+str(num)+' '+letter+num2+' '+letter+num3
+coords = '        ' + letter+str(num)+letter+num2+letter+num3
 coordinates = coordinates + coords
 
 letterstr = letterstr.replace(letter,'')
@@ -262,7 +262,7 @@ letter = letterstr[randint(0,8)]
 num = (randint(3,9))
 num2 = str(num-1)
 num3 = str(num-2)
-coords = '        ' + letter+str(num)+' '+letter+num2+' '+letter+num3
+coords = '        ' + letter+str(num)+letter+num2+letter+num3
 coordinates = coordinates + coords
 
 letterstr = letterstr.replace(letter,'')
@@ -270,36 +270,51 @@ letter = letterstr[randint(0,7)]
 num = (randint(3,9))
 num2 = str(num-1)
 num3 = str(num-2)
-coords = '        ' + letter+str(num)+' '+letter+num2+' '+letter+num3
+coords = '        ' + letter+str(num)+letter+num2+letter+num3
 coordinates = coordinates + coords
 
 print(coordinates)
 
 won = False
+toprint = ''
 
 while won != True:
-    printarena()
-    coordinate = input('type the coordinate of the point you want to fire. for example, a1 or b7. \n> ')
-    coordinate = coordinate.replace(' ','')
-    if coordinate in coordinates:
-        coordinate = str(coordinate)
-        print('You hit a ship')
-        l = int(coordinate[-1])
-        h = coordinate[0]
-        hh = 1 if h == 'a' else (2 if h == 'b' else (3 if h == 'c' else (4 if h == 'd' else (5 if h == 'e' else (6 if h == 'f' else (7 if h == 'g' else (8 if h == 'h' else (9 if h == 'i' else (10)))))))))
-        linein = c1 if l == 1 else (c2 if l == 2 else (c3 if l == 3 else (c4 if l == 4 else (c5 if l == 5 else (c6 if l == 6 else (c7 if l == 7 else (c8 if l == 8 else (c9 if l == 9 else l10 ))))))))
-        addhit(linein,hh)
+    try:
+        print('The computer is playing', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(0.1),print('.', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(0.1), print('.', end = ''),time.sleep(0.1), print('.', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(5)
         
-        input()
-        
-    else:
-        print('You missed')
-        l = int(coordinate[-1])
-        h = coordinate[0]
-        hh = 1 if h == 'a' else (2 if h == 'b' else (3 if h == 'c' else (4 if h == 'd' else (5 if h == 'e' else (6 if h == 'f' else (7 if h == 'g' else (8 if h == 'h' else (9 if h == 'i' else (10)))))))))
-        linein = c1 if l == 1 else (c2 if l == 2 else (c3 if l == 3 else (c4 if l == 4 else (c5 if l == 5 else (c6 if l == 6 else (c7 if l == 7 else (c8 if l == 8 else (c9 if l == 9 else l10 ))))))))
-        addmiss(linein,hh)
-        input()
+        printarena()
+        toprint = ''
+        print(toprint)
+        coordinate = input('type the coordinate of the point you want to fire. for example, a1 or b7. \n> ')
+        coordinate = coordinate.replace(' ','')
+        if coordinate in coordinates:
+            coordinate = str(coordinate)
+            toprint = ' you hit a ship'
+
+            l = int(coordinate[-1])
+            h = coordinate[0]
+
+            hh = 1 if h == 'a' else (2 if h == 'b' else (3 if h == 'c' else (4 if h == 'd' else (5 if h == 'e' else (6 if h == 'f' else (7 if h == 'g' else (8 if h == 'h' else (9 if h == 'i' else (0)))))))))
+            
+            ln = l
+            
+            c1,c2,c3,c4,c5,c6,c7,c8,c9,c10 = (addhit(c1,hh) if ln == 1 else c1), (addhit(c2,hh) if ln == 2 else c2), (addhit(c3,hh) if ln == 3 else c3), (addhit(c4,hh) if ln == 4 else c4), (addhit(c5,hh) if ln == 5 else c5), (addhit(c6,hh) if ln == 6 else c6), (addhit(c7,hh) if ln == 7 else c7), (addhit(c8,hh) if ln == 8 else c8), (addhit(c9,hh) if ln == 9 else c9), (addhit(c10,hh) if ln == 0 else c10)
+            
+        else:
+            toprint = 'You missed'
+            coordinate = str(coordinate)
+
+            l = int(coordinate[-1])
+            h = coordinate[0]
+
+            hh = 1 if h == 'a' else (2 if h == 'b' else (3 if h == 'c' else (4 if h == 'd' else (5 if h == 'e' else (6 if h == 'f' else (7 if h == 'g' else (8 if h == 'h' else (9 if h == 'i' else (0)))))))))
+            
+            ln = l
+            
+            c1,c2,c3,c4,c5,c6,c7,c8,c9,c10 = (addmiss(c1,hh) if ln == 1 else c1), (addmiss(c2,hh) if ln == 2 else c2), (addmiss(c3,hh) if ln == 3 else c3), (addmiss(c4,hh) if ln == 4 else c4), (addmiss(c5,hh) if ln == 5 else c5), (addmiss(c6,hh) if ln == 6 else c6), (addmiss(c7,hh) if ln == 7 else c7), (addmiss(c8,hh) if ln == 8 else c8), (addmiss(c9,hh) if ln == 9 else c9), (addmiss(c10,hh) if ln == 0 else c10)
+
+    except:
+        pass
 
 
 

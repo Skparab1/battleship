@@ -59,17 +59,17 @@ def adds3(line):
     return line
 
 def addhit(line,pos):
-    pos = pos*2
+    pos = (pos-1)*2
     linepart1 = line[:pos]
     linepart2 = line[pos+1:]
-    line = linepart1 + 'H' + linepart2
+    line = linepart1 + 'X' + linepart2
     return line
 
 def addmiss(line,pos):
-    pos = pos*2
+    pos = (pos-1)*2
     linepart1 = line[:pos]
     linepart2 = line[pos+1:]
-    line = linepart1 + 'M' + linepart2
+    line = linepart1 + '-' + linepart2
     return line
 
 # initialise line variables
@@ -254,42 +254,52 @@ letter = letterstr[randint(0,9)]
 num = (randint(3,9))
 num2 = str(num-1)
 num3 = str(num-2)
-coords = '        ' + letter+str(num)+letter+num2+letter+num3
-coordinates = coordinates + coords
+ship1coords = '        ' + letter+str(num)+letter+num2+letter+num3
+coordinates = coordinates + ship1coords
 
 letterstr = letterstr.replace(letter,'')
 letter = letterstr[randint(0,8)]
 num = (randint(3,9))
 num2 = str(num-1)
 num3 = str(num-2)
-coords = '        ' + letter+str(num)+letter+num2+letter+num3
-coordinates = coordinates + coords
+ship2coords = '        ' + letter+str(num)+letter+num2+letter+num3
+coordinates = coordinates + ship2coords
 
 letterstr = letterstr.replace(letter,'')
 letter = letterstr[randint(0,7)]
 num = (randint(3,9))
 num2 = str(num-1)
 num3 = str(num-2)
-coords = '        ' + letter+str(num)+letter+num2+letter+num3
-coordinates = coordinates + coords
+ship3coords = '        ' + letter+str(num)+letter+num2+letter+num3
+coordinates = coordinates + ship3coords
 
 print(coordinates)
 
 won = False
 toprint = ''
+guessedcoords = ''
+hitships = 0
+stringofcoords = 'a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 b1 b2 b3 b4 b5 b6 b7 b8 b9 b10 c1 c2 c3 c4 c5 c6 c7 c8 c9 c10 d1 d2 d3 d4 d5 d6 d7 d8 d9 d10 e1 e2 e3 e4 e5 e6 e7 e8 e9 e10 f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 g1 g2 g3 g4 g5 g6 g7 g8 g9 g10 h1 h2 h3 h4 h5 h6 h7 h8 h9 h10 i1 i2 i3 i4 i5 i6 i7 i8 i9 i10 j1 j2 j3 j4 j5 j6 j7 j8 j9 j10'
+hits, misses, sinks = 0,0,0
 
 while won != True:
-    try:
-        print('The computer is playing', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(0.1),print('.', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(0.1), print('.', end = ''),time.sleep(0.1), print('.', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(5)
-        
+    if True: #try:
         printarena()
-        toprint = ''
+        print('\nHits: ',hits,'   misses: ', misses,'   sinks: ', sinks,'\n')
         print(toprint)
-        coordinate = input('type the coordinate of the point you want to fire. for example, a1 or b7. \n> ')
+        toprint = ''
+        coordinate = input('\ntype the coordinate of the point you want to fire. for example, a1 or b7. \n> ')
         coordinate = coordinate.replace(' ','')
-        if coordinate in coordinates:
+
+        if hits >= 9:
+            won = True
+            print('You have won the game.')
+
+        if (coordinate in coordinates) and (coordinate != '') and (coordinate != ' '):
             coordinate = str(coordinate)
-            toprint = ' you hit a ship'
+            toprint = 'You hit a ship'
+            hitships += 1
+            hits += 1
 
             l = int(coordinate[-1])
             h = coordinate[0]
@@ -299,10 +309,17 @@ while won != True:
             ln = l
             
             c1,c2,c3,c4,c5,c6,c7,c8,c9,c10 = (addhit(c1,hh) if ln == 1 else c1), (addhit(c2,hh) if ln == 2 else c2), (addhit(c3,hh) if ln == 3 else c3), (addhit(c4,hh) if ln == 4 else c4), (addhit(c5,hh) if ln == 5 else c5), (addhit(c6,hh) if ln == 6 else c6), (addhit(c7,hh) if ln == 7 else c7), (addhit(c8,hh) if ln == 8 else c8), (addhit(c9,hh) if ln == 9 else c9), (addhit(c10,hh) if ln == 0 else c10)
-            
-        else:
+
+            if hitships == 3:
+                sinks += 1
+                hitships = 0
+                toprint = 'You have hit and sank a ship'
+    
+        elif (coordinate != '') and (coordinate != ' ') and (coordinate in stringofcoords) and coordinate not in guessedcoords:
             toprint = 'You missed'
             coordinate = str(coordinate)
+            misses += 1
+            guessedcoords = guessedcoords + ' ' + coordinate
 
             l = int(coordinate[-1])
             h = coordinate[0]
@@ -313,8 +330,16 @@ while won != True:
             
             c1,c2,c3,c4,c5,c6,c7,c8,c9,c10 = (addmiss(c1,hh) if ln == 1 else c1), (addmiss(c2,hh) if ln == 2 else c2), (addmiss(c3,hh) if ln == 3 else c3), (addmiss(c4,hh) if ln == 4 else c4), (addmiss(c5,hh) if ln == 5 else c5), (addmiss(c6,hh) if ln == 6 else c6), (addmiss(c7,hh) if ln == 7 else c7), (addmiss(c8,hh) if ln == 8 else c8), (addmiss(c9,hh) if ln == 9 else c9), (addmiss(c10,hh) if ln == 0 else c10)
 
-    except:
-        pass
+        #print('The computer is playing', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(0.1),print('.', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(0.1), print('.', end = ''),time.sleep(0.1), print('.', end = ''), time.sleep(0.1), print('.', end = ''), time.sleep(0.5)
+
+        elif coordinate in guessedcoords and (coordinate != '') and (coordinate != ' '):
+            toprint = 'You have already guessed that coordinate. try again'
+
+        else:
+            toprint = 'Invalid coordinate. try again'
+
+    #except:
+        #pass
 
 
 

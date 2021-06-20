@@ -302,7 +302,7 @@ chs, lasthit, lastcoord = 0, False, ''
 compplayed, chits = '', 0
 
 while won != True:
-    if True: #try:
+    try:
 
         if grato == True:
             # computer play
@@ -437,5 +437,5 @@ while won != True:
         printarena()
         print('\nHits: ',hits,'   misses: ', misses,'   sinks: ', sinks,'\n')
         print(toprint)
-    #except:
-        #pass
+    except:
+        pass

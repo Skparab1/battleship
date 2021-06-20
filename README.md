@@ -27,3 +27,4 @@ Play the board game Battleship against the computer.
 - better guessing algorithm for computer (not just random)
 - make multiple levels
 - fix bug of allowing to enter the coordinate multiple times if it is a hit
+- fix bug allowing you to move a ship over another ship

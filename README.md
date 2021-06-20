@@ -4,7 +4,7 @@ Play the board game Battleship against the computer.
 # Positioning ships
 - position ships using WASD keys and press enter when done
 
-![](battleship_ships_moving.gif)
+![](battleship_ship_moving.gif)
 
 
 # play against computer
@@ -14,7 +14,7 @@ Play the board game Battleship against the computer.
 - the computer will play very similar to how a human would
 - the computer will guess randomly first, and if it gets a hit, then it will guess around that coordinate
 
-![](battleship_machine learning.gif)
+![](battleship_machine_learning.gif)
 
 
 # incorrect input identification

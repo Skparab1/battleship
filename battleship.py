@@ -302,7 +302,7 @@ while won != True:
                 # update vars
                 lasthit = True
                 lastcoord = randcoord
-                toprint = 'computer guessed ', randcoord, 'and has hit one of your ships'
+                toprint = 'computer guessed '+ randcoord+ ' and has hit one of your ships'
                 coordinate = str(randcoord)
                 chs += 1
                 chits += 1
@@ -318,7 +318,7 @@ while won != True:
 
             # if computer misses
             else:
-                toprint = 'computer guessed ', randcoord, 'and has missed'
+                toprint = 'computer guessed '+ randcoord+ ' and has missed'
                 coordinate = str(randcoord)
 
                 l = int(coordinate[-1])
@@ -333,7 +333,7 @@ while won != True:
             # change message if the computer has hti and sank a ship
             if chs == 3:
                 chs = 0
-                toprint = 'computer guessed ', randcoord, 'and hit and sank a ship'
+                toprint = 'computer guessed '+ randcoord+ ' and hit and sank a ship'
                 lasthit = False
 
             randcoord = randcoord.replace(' ','')
@@ -363,7 +363,7 @@ while won != True:
         # check if user hits a ship
         if (coordinate in coordinates) and (coordinate != '') and (coordinate != ' ') and coordinate not in guessedcoords:
             coordinate = str(coordinate)
-            toprint = 'You guessed ', coordinate,' and hit a ship'
+            toprint = 'You guessed '+ coordinate+' and hit a ship'
             hitships += 1
             hits += 1
 
@@ -381,12 +381,12 @@ while won != True:
             if hitships == 3:
                 sinks += 1
                 hitships = 0
-                toprint = 'You guessed ', coordinate,' and hit and sank a ship'
+                toprint = 'You guessed '+ coordinate+' and hit and sank a ship'
 
         # check if user missed
         elif (coordinate != '') and (coordinate != ' ') and (coordinate in stringofcoords) and coordinate not in guessedcoords:
             # update variables
-            toprint = 'You guessed ', coordinate,' and missed'
+            toprint = 'You guessed '+coordinate+' and missed'
             coordinate = str(coordinate)
             misses += 1
             guessedcoords = guessedcoords + ' ' + coordinate
@@ -404,7 +404,7 @@ while won != True:
 
         # checks for reguessed coordinates
         elif coordinate in guessedcoords and (coordinate != '') and (coordinate != ' '):
-            toprint = 'You have already guessed ', coordinate,'. try again'
+            toprint = 'You have already guessed '+ coordinate+'. try again'
             grato = False
 
         # if coordinate is not recognized, makes computer skip playing and prints message

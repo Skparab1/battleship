@@ -134,7 +134,8 @@ while choice != '':
     print('position your second ship')
     print('press WASD keys followed by enter to move your ship')
     print('press enter when you are done')
-    print(height2)
+    print(ship1pos)
+    print(ship2pos)
 
     # get and process input
     choice = input('')
@@ -142,13 +143,25 @@ while choice != '':
 
     # change line variables based on input
     if choice == 'w':
-        height2 = (height2 - 1 if height2 > 0 else height2)
+        if ship1pos == ship2pos:
+            height2 = (height2 - 1 if height2 > 0 else height2) if height2 < height-3 else height2
+        else:
+            height2 = (height2 - 1 if height2 > 0 else height2)
     if choice == 's':
-        height2 = (height2 + 1 if height2 < 10 else height2)
+        if ship1pos == ship2pos:
+            height2 = (height2 + 1 if height2 > 0 else height2) if height2 < height-3 else height2
+        else:
+            height2 = (height2 + 1 if height2 > 0 else height2)
     if choice == 'a':
-        ship2pos = (ship2pos - 1 if ship2pos > 0 else ship2pos)
+        if ship1pos == ship2pos - 1:
+            ship2pos = (ship2pos - 1 if ship2pos > 0 else ship2pos) if height != height2 and height != height2+1 and height != height2+2 and height != height2-1 and height != height2-2 else ship2pos
+        else:
+            ship2pos = (ship2pos - 1 if ship2pos > 0 else ship2pos)
     if choice == 'd':
-        ship2pos = (ship2pos + 1 if ship2pos < 9 else ship2pos)
+        if ship1pos == ship2pos + 1:
+            ship2pos = (ship2pos + 1 if ship2pos < 9 else ship2pos) if height != height2 and height != height2+1 and height != height2+2 and height != height2-1 and height != height2-2 else ship2pos
+        else:
+            ship2pos = (ship2pos + 1 if ship2pos < 9 else ship2pos)
 
     # change lines based on changed variables
     ln = height2
@@ -258,13 +271,22 @@ stringofcoords = 'a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 b1 b2 b3 b4 b5 b6 b7 b8 b9 b10 
 hits, misses, sinks = 0,0,0
 grato = False
 chs, lasthit, lastcoord = 0, False, ''
-compplayed, chits = '', 0
+compplayed, chits, lup = '', 0, True
 
 # keep playing the game until player wins or computer wins
 while won != True:
 
     # try: to override any errors caused by wrong input
     try:
+        
+        # check if player or computer won
+        if hits >= 9:
+            won = True
+            print('You have hit all the computer\'s ships and won the game.')
+        if chits >= 9:
+            won = True
+            print('The computer has hit all of your ships. you have lost')
+
 
         # grato controls wether the computer will play or not. it would not play if the input of the user was bad or it was the first time that it entered the loop
         if grato == True:
@@ -293,9 +315,12 @@ while won != True:
                 randcoord = h+l
                 # while the coordinate has not been guessed, the computer will keep trying up and down
                 while randcoord in compplayed:
-                    l = int(l) + randint(-1,1)
-                    randcoord = h+str(l)
-
+                    if lup == True:
+                        l = int(l) + 1
+                        randcoord = h+str(l)
+                    else:
+                        l = int(l) - 1
+                        randcoord = h+str(l)
             # if computer hits, print that and add an x
             if randcoord in yourcoords:
 
@@ -318,6 +343,7 @@ while won != True:
 
             # if computer misses
             else:
+                lup = False
                 toprint = 'computer guessed '+ randcoord+ ' and has missed'
                 coordinate = str(randcoord)
 
@@ -351,14 +377,6 @@ while won != True:
 
         coordinate = input('\ntype the coordinate of the point you want to fire. for example, a1 or b7. \n> ')
         coordinate = coordinate.replace(' ','')
-
-        # check if player or computer won
-        if hits >= 9:
-            won = True
-            print('You have hit all the computer\'s ships and won the game.')
-        if chits >= 9:
-            won = True
-            print('The computer has hit all of your ships. you have lost')
 
         # check if user hits a ship
         if (coordinate in coordinates) and (coordinate != '') and (coordinate != ' ') and coordinate not in guessedcoords:

@@ -95,7 +95,6 @@ while choice != '':
     print('position your first ship')
     print('press WASD keys followed by enter to move your ship')
     print('press enter when you are done')
-    print(height)
 
     # get and process input
     choice = input('')
@@ -134,8 +133,6 @@ while choice != '':
     print('position your second ship')
     print('press WASD keys followed by enter to move your ship')
     print('press enter when you are done')
-    print(ship1pos)
-    print(ship2pos)
 
     # get and process input
     choice = input('')
@@ -149,9 +146,9 @@ while choice != '':
             height2 = (height2 - 1 if height2 > 0 else height2)
     if choice == 's':
         if ship1pos == ship2pos:
-            height2 = (height2 + 1 if height2 > 0 else height2) if height2 < height-3 else height2
+            height2 = (height2 + 1 if height2 < 10 else height2) if height2 < height-3 else height2
         else:
-            height2 = (height2 + 1 if height2 > 0 else height2)
+            height2 = (height2 + 1 if height2 < 10 else height2)
     if choice == 'a':
         if ship1pos == ship2pos - 1:
             ship2pos = (ship2pos - 1 if ship2pos > 0 else ship2pos) if height != height2 and height != height2+1 and height != height2+2 and height != height2-1 and height != height2-2 else ship2pos
@@ -187,7 +184,6 @@ while choice != '':
     print('press WASD keys followed by enter to move your ship')
     #print('press t to turn your ship') Sorry, turning does not work yet
     print('press enter when you are done')
-    print(height2)
 
     # get and process input
     choice = input('')
@@ -195,13 +191,33 @@ while choice != '':
 
     # change variables based on input
     if choice == 'w':
-        height3 = (height3 - 1 if height3 > 0 else height3)
+        if ship3pos == ship1pos:
+            height3 = (height3 - 1 if height3 > 0 else height3) if height3 < height-3  else height3
+        elif ship3pos == ship2pos:
+            height3 = (height3 - 1 if height3 > 0 else height3) if height3 < height2-3  else height3
+        else:
+            height3 = (height3 - 1 if height3 > 0 else height3)
     if choice == 's':
-        height3 = (height3 + 1 if height3 < 10 else height3)
+        if ship3pos == ship1pos:
+            height3 = (height3 + 1 if height3 < 10 else height3) if height3 < height-3 else height3
+        elif ship3pos == ship2pos:
+            height3 = (height3 + 1 if height3 < 10 else height3) if height3 < height2-3 else height3
+        else:
+            height3 = (height3 + 1 if height3 < 10 else height3)
     if choice == 'a':
-        ship3pos = (ship3pos - 1 if ship3pos > 0 else ship3pos)
+        if ship1pos == ship3pos - 1:
+            ship3pos = (ship3pos - 1 if ship3pos > 0 else ship3pos) if height != height3 and height != height3+1 and height != height3+2 and height != height3-1 and height != height3-2 else ship3pos
+        elif ship2pos == ship3pos - 1:
+            ship3pos = (ship3pos - 1 if ship3pos > 0 else ship3pos) if height2 != height3 and height2 != height3+1 and height2 != height3+2 and height2 != height3-1 and height2 != height3-2 else ship3pos
+        else:
+            ship3pos = (ship3pos - 1 if ship3pos > 0 else ship3pos)
     if choice == 'd':
-        ship3pos = (ship3pos + 1 if ship3pos < 9 else ship3pos)
+        if ship1pos-1 == ship3pos:
+            ship3pos = (ship3pos + 1 if ship3pos < 9 else ship3pos) if height != height3 and height != height3+1 and height != height3+2 and height != height3-1 and height != height3-2 else ship3pos
+        elif ship2pos-1 == ship3pos:
+            ship3pos = (ship3pos + 1 if ship3pos < 9 else ship3pos) if height2 != height3 and height2 != height3+1 and height2 != height3+2 and height2 != height3-1 and height2 != height3-2 else ship3pos
+        else:
+            ship3pos = (ship3pos + 1 if ship3pos < 9 else ship3pos)
 
     # change lines based on input
     ln = height3
@@ -283,9 +299,11 @@ while won != True:
         if hits >= 9:
             won = True
             print('You have hit all the computer\'s ships and won the game.')
+            break
         if chits >= 9:
             won = True
             print('The computer has hit all of your ships. you have lost')
+            break
 
 
         # grato controls wether the computer will play or not. it would not play if the input of the user was bad or it was the first time that it entered the loop

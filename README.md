@@ -1,5 +1,5 @@
 # battleship
-Play the board game Battleship against the computer.
+Play the board game Battleship against the computer which uses AI and ML algorithms to precisely replicate the playing of a human.
 
 # Positioning ships
 - position ships using WASD keys and press enter when done

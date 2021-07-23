@@ -362,7 +362,7 @@ while won != True:
             # if computer misses
             else:
                 lup = False
-                toprint = 'computer guessed '+ randcoord+ ' and has missed'
+                toprint = 'Computer guessed '+ randcoord+ ' and has missed'
                 coordinate = str(randcoord)
 
                 l = int(coordinate[-1])
